@@ -1,10 +1,11 @@
 import google.generativeai as genai
 import os
+from random import randint
 
 tentativas = 0
 
 #Coloque sua api no luga de "sua api"
-genai.configure(api_key="sua api")
+genai.configure(api_key="AIzaSyAuptMLsAZq9BGWfMBy3dUB2ogG74NnumI")
 
 #aqui escolhemos qual ia queremos usar
 model = genai.GenerativeModel('gemini-pro')
@@ -39,26 +40,25 @@ if escolha == 1:
 
         #se a response do gemini for igual ao numero_usuario damos um break no while
         if response.text == numero_usuario:
-            print(f"Voce perdeu, ele acertou em {tentativas} tentativas")
+            print(f"Voce perdeu, ele acertou em {tentativas} tentativa(s)")
             break
 
 #nessa segunda opção o gemini ira escolher um numero
 #e o gemini ira dar dicas para o usuario acertar seu numero
 elif escolha == 2:
-
-    numero_gemini = chat.send_message("Escolha um numero entre 0 e 100")
+    numero_gemini = randint(1,101)
+    print(numero_gemini)
     while True:  
-            
             #prompt dado ao gemini para dar dicas ao usuario 
-            response = chat.send_message(f"Você dara uma dica por vez ao usuario para acertar esse numero {numero_gemini}, não diga qual numero é, não pode repetir dicas") 
+            response = chat.send_message(f"Você dara apenas um dica por vez ao usuario para acertar esse numero {numero_gemini}, não diga qual numero é, não pode repetir dicas") 
 
             print("Gemini:", response.text)
             print("-"*40)
-            numero = str(input("Usuario: "))
+            numero = int(input("Usuario: "))
             tentativas += 1
             print("-"*40)
 
             #se o numero que o usuario chutou for igual ao numero_gemini.text, damos um break no while
-            if numero == numero_gemini.text:
-                print(f"Voce ganhou, voce acertou em {tentativas} tentativas")
+            if numero == numero_gemini:
+                print(f"Voce ganhou, voce acertou em {tentativas} tentativa(s)")
                 break
